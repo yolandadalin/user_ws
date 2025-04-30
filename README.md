@@ -10,6 +10,7 @@
 - AWS EC2（部署環境）
 
 API 介面說明：
+Swagger UI：http://ec2-56-155-36-104.ap-northeast-3.compute.amazonaws.com:8080/user-ws/swagger-ui/index.html
 伺服器網址（EC2）：
 http://ec2-56-155-36-104.ap-northeast-3.compute.amazonaws.com:8080
 
