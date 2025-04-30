@@ -39,13 +39,13 @@ public class WebSecurity {
 		authenticationFilter.setFilterProcessesUrl("/users/login");
 
 		http.csrf((csrf) -> csrf.disable())
-				.authorizeHttpRequests((authz) -> authz.requestMatchers(HttpMethod.POST, "/users").permitAll()
-						.anyRequest().authenticated())
+				.authorizeHttpRequests((authz) -> authz
+						.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+						.requestMatchers(HttpMethod.POST, "/users").permitAll().anyRequest().authenticated())
 				.authenticationManager(authenticationManager).addFilter(authenticationFilter)
 				.addFilter(new AuthorizationFilter(authenticationManager))
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
 		return http.build();
 	}
-
 }

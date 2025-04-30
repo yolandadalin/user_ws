@@ -25,13 +25,18 @@ import com.yolanda.app.ws.ui.model.response.OperationStatusModel;
 import com.yolanda.app.ws.ui.model.response.RequestOperationStatus;
 import com.yolanda.app.ws.ui.model.response.UserRest;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
-@RequestMapping("users") // http://localhost:8080/users
+@RequestMapping("users")
+@Tag(name = "user_ws", description = "基本的使用者帳號管理功能，包括註冊、查詢、更新與刪除。 Basic user account management functions, including registration, query, update and delete.")
 public class UserController {
 
 	@Autowired
 	UserService userService;
 
+	@Operation(summary = "取得使用者資訊 Get user information", description = "根據用戶ID取得使用者資訊 Get user details by user ID.")
 	@GetMapping(path = "/{id}", produces = { MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
 	public UserRest getUser(@PathVariable String id) {
 		UserRest returnValue = new UserRest();
@@ -42,6 +47,7 @@ public class UserController {
 		return returnValue;
 	}
 
+	@Operation(summary = "建立使用者 Register", description = "使用姓名、email及密碼建立使用者 Create a user with first name, last name, email and password.")
 	@PostMapping(consumes = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE }, produces = {
 			MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
 	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception {
@@ -59,6 +65,7 @@ public class UserController {
 		return returnValue;
 	}
 
+	@Operation(summary = "更新使用者資訊 Update User Information", description = "根據用戶ID更新使用者資訊 Update user information by user ID.")
 	@PutMapping(path = "/{id}", consumes = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_XML_VALUE,
 					MediaType.APPLICATION_JSON_VALUE })
@@ -77,6 +84,7 @@ public class UserController {
 		return returnValue;
 	}
 
+	@Operation(summary = "刪除使用者 Delete User", description = "根據用戶ID刪除使用者資訊 Delete user information by user ID.")
 	@DeleteMapping(path = "/{id}", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
 	public OperationStatusModel deleteUser(@PathVariable String id) {
 
@@ -90,6 +98,7 @@ public class UserController {
 		return returnValue;
 	}
 
+	@Operation(summary = "取得多筆使用者資訊 Get multiple user profiles", description = "根據資料頁數及筆數顯示多筆使用者資訊 Get multiple user information according to the number of pages and the number of the data.")
 	@GetMapping(produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
 	public List<UserRest> getUsers(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "25") int limit) {
